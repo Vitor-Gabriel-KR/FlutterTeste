@@ -1,29 +1,20 @@
 import 'package:flutter/material.dart';
 
-class CarrinhoFinal extends StatelessWidget {
-  const CarrinhoFinal({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: CarrinhoScreen(),
-    );
-  }
-}
-
 class CarrinhoScreen extends StatefulWidget {
-  const CarrinhoScreen({super.key});
+  final carrinhos;
+  const CarrinhoScreen({super.key, required this.carrinhos});
 
   @override
   _CarrinhoScreenState createState() => _CarrinhoScreenState();
 }
-
-class _CarrinhoScreenState extends State<CarrinhoScreen> {
   List<CarrinhoIntel> carrinhos = [];
+  
+class _CarrinhoScreenState extends State<CarrinhoScreen> {
+
   List<bool> buttonEnabled = [true, true, true];
   bool compraRealizada = false;
 
-  void adicionarCarrinho(String nome, String preco, int index) {
+void adicionarCarrinho(String nome, String preco, int index) {
     setState(() {
       carrinhos.add(CarrinhoIntel(key: UniqueKey(), nome: nome, preco: preco, index: index));
       buttonEnabled[index] = false;
@@ -37,6 +28,57 @@ class _CarrinhoScreenState extends State<CarrinhoScreen> {
     });
   }
 
+Widget buildbotao0(){
+    return 
+      ElevatedButton(
+              onPressed: buttonEnabled[0]
+                  ? () {
+                      adicionarCarrinho("Geladeira Gamer Com Led", "Preço 3250.00", 0);
+                    }
+                  : null,
+              style: ElevatedButton.styleFrom(
+                primary: const Color(0xFFB10C43),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+              ),
+              child: const Text('Mostrar Produto 1'),
+            );
+}
+Widget buildbotao1(){
+  return 
+  ElevatedButton(
+              onPressed: buttonEnabled[1]
+                  ? () {
+                      adicionarCarrinho("Xbox One Do Godi Of Uar", "Preço 4550.00", 1);
+                    }
+                  : null,
+              style: ElevatedButton.styleFrom(
+                primary: const Color(0xFFB10C43),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+              ),
+              child: const Text('Mostrar Produto 2'),
+            );
+}
+Widget buildbotao2(){
+  return 
+  ElevatedButton(
+              onPressed: buttonEnabled[2]
+                  ? () {
+                      adicionarCarrinho("Planeta Terra", "1,999,999,999,999.00", 2);
+                    }
+                  : null,
+              style: ElevatedButton.styleFrom(
+                primary: const Color(0xFFB10C43),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+              ),
+              child: const Text('Mostrar Produto 3'),
+            );
+}
   void mostrarPopOut() {
     showDialog(
       context: context,
@@ -60,6 +102,7 @@ class _CarrinhoScreenState extends State<CarrinhoScreen> {
     );
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,56 +120,23 @@ class _CarrinhoScreenState extends State<CarrinhoScreen> {
                 removerCarrinho(carrinho.key, carrinho.index);
               }),
             ],
-            ElevatedButton(
-              onPressed: buttonEnabled[0]
-                  ? () {
-                      adicionarCarrinho("Geladeira Gamer Com Led", "Preço 3250.00", 0);
-                    }
-                  : null,
-              style: ElevatedButton.styleFrom(
-                primary: const Color(0xFFB10C43),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-              ),
-              child: const Text('Mostrar Produto 1'),
-            ),
+          
+            buildbotao0(),
+
             Container(
               height: 12.0,
               color: const Color(0xFFEBDFCC),
-            ),
-            ElevatedButton(
-              onPressed: buttonEnabled[1]
-                  ? () {
-                      adicionarCarrinho("Xbox One Do Godi Of Uar", "Preço 4550.00", 1);
-                    }
-                  : null,
-              style: ElevatedButton.styleFrom(
-                primary: const Color(0xFFB10C43),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-              ),
-              child: const Text('Mostrar Produto 2'),
-            ),
+            ), 
+
+            buildbotao1(),
+
             Container(
               height: 12.0,
               color: const Color(0xFFEBDFCC),
-            ),
-            ElevatedButton(
-              onPressed: buttonEnabled[2]
-                  ? () {
-                      adicionarCarrinho("Planeta Terra", "1,999,999,999,999.00", 2);
-                    }
-                  : null,
-              style: ElevatedButton.styleFrom(
-                primary: const Color(0xFFB10C43),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-              ),
-              child: const Text('Mostrar Produto 3'),
-            ),
+            ), 
+
+            buildbotao2(),
+            
             const SizedBox(height: 24.0),
             ElevatedButton(
               onPressed: compraRealizada ? null : mostrarPopOut,
@@ -226,3 +236,4 @@ class CarrinhoIntel {
 
   CarrinhoIntel({required this.key, required this.nome, required this.preco, required this.index});
 }
+
