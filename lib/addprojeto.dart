@@ -25,16 +25,13 @@ class _ProductScreenState extends State<ProductScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Produtos'),
-      ),
-      body: Center(
-        child: newProductImage.isEmpty
-            ? buildAdicionarNovoProduto()
-            : buildProdutoContainer2(newProductImage, newProductName, newProductPrice),
-      ),
-    );
+   if(newProductImage.isEmpty){
+
+             return buildAdicionarNovoProduto();
+   } else {
+            return buildProdutoContainer2(newProductImage, newProductName, newProductPrice);
+
+   }
   }
 
   Widget buildAdicionarNovoProduto() {
@@ -161,7 +158,7 @@ class _ProductScreenState extends State<ProductScreen> {
           ),
           TextButton(
             style: TextButton.styleFrom(
-              primary: Colors.white,
+              primary: Color.fromARGB(255, 255, 255, 255),
             ),
             onPressed: () {
               // 
