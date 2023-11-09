@@ -10,26 +10,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
-  List<bool> buttonEnabled = [true, true, true];
+  List<bool> buttonEnablede = [false, false, false];
 
   @override
   Widget build(BuildContext context) {
     List<CarrinhoIntel> carrinhos = [];
 
-  void adicionarCarrinho(String nome, String preco, int index) {
-    setState(() {
-      carrinhos.add(CarrinhoIntel(key: UniqueKey(), nome: nome, preco: preco, index: index));
-      buttonEnabled[index] = false;
-    });
-  }
-
-  void removerCarrinho(Key key, int index) {
-    setState(() {
-      carrinhos.removeWhere((carrinho) => carrinho.key == key);
-      buttonEnabled[index] = true;
-    });
-  }
     return MaterialApp(
       home: Scaffold(
         backgroundColor: const Color(0xFFEBDFCC),
@@ -83,8 +69,7 @@ class _MyAppState extends State<MyApp> {
                     'Cd Original Do Senhor Dos Aneis',
                     '25.550.00',
                   ),
-                  ProductScreen()
-
+                  const ProductScreen()
                 ],
               ),
               buildFaixa(),
@@ -131,11 +116,15 @@ class _MyAppState extends State<MyApp> {
                     height: 30.0,
                     child: ElevatedButton(
                       onPressed: () {
-                        //adicionarCarrinho()
+                        setState(() {
+                          buttonEnablede[0] = true;
+                        });
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: const Color(0xFFB10C43),
-                        onPrimary: Colors.white,
+                        foregroundColor: Colors.white,
+                        backgroundColor: buttonEnablede[0]
+                            ? Colors.green
+                            : const Color(0xFFB10C43),
                       ),
                       child: const Text('Enviar para o carrinho'),
                     ),
@@ -145,11 +134,15 @@ class _MyAppState extends State<MyApp> {
                     height: 30.0,
                     child: ElevatedButton(
                       onPressed: () {
-                        //
+                        setState(() {
+                          buttonEnablede[1] = true;
+                        });
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: const Color(0xFFB10C43),
-                        onPrimary: Colors.white,
+                        foregroundColor: Colors.white,
+                        backgroundColor: buttonEnablede[1]
+                            ? Colors.green
+                            : const Color(0xFFB10C43),
                       ),
                       child: const Text('Enviar para o carrinho'),
                     ),
@@ -159,11 +152,15 @@ class _MyAppState extends State<MyApp> {
                     height: 30.0,
                     child: ElevatedButton(
                       onPressed: () {
-                        //
+                        setState(() {
+                          buttonEnablede[2] = true;
+                        });
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: const Color(0xFFB10C43),
-                        onPrimary: Colors.white,
+                        foregroundColor: Colors.white,
+                        backgroundColor: buttonEnablede[2]
+                            ? Colors.green
+                            : const Color(0xFFB10C43),
                       ),
                       child: const Text('Enviar para o carrinho'),
                     ),
@@ -175,19 +172,22 @@ class _MyAppState extends State<MyApp> {
             ],
           ),
         ),
-        floatingActionButton: Builder(
-          builder: (context) {
-            return FloatingActionButton(
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) =>  CarrinhoScreen(carrinhos:carrinhos),
-                ));
-              },
-              backgroundColor: Color(0xFFB10C43),
-              child: const Icon(Icons.shopping_cart),
-            );
-          }
-        ),
+        floatingActionButton: Builder(builder: (context) {
+          return FloatingActionButton(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => CarrinhoScreen(
+                    carrinhos: carrinhos,
+                    buttonEnablede: buttonEnablede,
+                  ),
+                ),
+              );
+            },
+            backgroundColor: const Color(0xFFB10C43),
+            child: const Icon(Icons.shopping_cart),
+          );
+        }),
       ),
     );
   }
@@ -219,7 +219,7 @@ class _MyAppState extends State<MyApp> {
           ),
           TextButton(
             style: TextButton.styleFrom(
-              primary: Colors.white,
+              foregroundColor: Colors.white,
             ),
             onPressed: () {},
             child: Text('Preço: R\$ $preco'),
@@ -228,98 +228,6 @@ class _MyAppState extends State<MyApp> {
       ),
     );
   }
-}
-
-Widget buildAdicionarNovoProduto2() {
-  return Container(
-    height: 300.0,
-    width: 300.0,
-    decoration: BoxDecoration(
-      color: const Color(0xFFEBDFCC),
-      borderRadius: BorderRadius.circular(20.0),
-    ),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        SizedBox(
-          width: 225,
-          height: 225,
-          child: ElevatedButton(
-            onPressed: () {},
-            style: ElevatedButton.styleFrom(
-              primary: const Color(0xFFEBDFCC),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-            ),
-            child: const Icon(
-              Icons.add,
-              color: Colors.white,
-              size: 60,
-            ),
-          ),
-        ),
-        const SizedBox(height: 10),
-        TextButton(
-          style: TextButton.styleFrom(
-            primary: Colors.white,
-          ),
-          onPressed: () {},
-          child: const Text('Adicionar novo produto'),
-        ),
-      ],
-    ),
-  );
-}
-
-Widget buildEnviarParaCarrinho() {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    children: [
-      SizedBox(
-        width: 300.0,
-        height: 30.0,
-        child: ElevatedButton(
-          onPressed: () {
-            //
-          },
-          style: ElevatedButton.styleFrom(
-            primary: const Color(0xFFB10C43),
-            onPrimary: Colors.white,
-          ),
-          child: const Text('Enviar para o carrinho'),
-        ),
-      ),
-      SizedBox(
-        width: 300.0,
-        height: 30.0,
-        child: ElevatedButton(
-          onPressed: () {
-            //
-          },
-          style: ElevatedButton.styleFrom(
-            primary: const Color(0xFFB10C43),
-            onPrimary: Colors.white,
-          ),
-          child: const Text('Enviar para o carrinho'),
-        ),
-      ),
-      SizedBox(
-        width: 300.0,
-        height: 30.0,
-        child: ElevatedButton(
-          onPressed: () {
-            //
-          },
-          style: ElevatedButton.styleFrom(
-            primary: const Color(0xFFB10C43),
-            onPrimary: Colors.white,
-          ),
-          child: const Text('Enviar para o carrinho'),
-        ),
-      ),
-    ],
-  );
 }
 
 Widget buildCarrinhoIntel(String nome, String preco, BuildContext context) {
@@ -364,11 +272,9 @@ Widget buildCarrinhoIntel(String nome, String preco, BuildContext context) {
             Padding(
               padding: const EdgeInsets.all(10),
               child: ElevatedButton(
-                onPressed: () {
-                  // Implemente a lógica para a ação do botão aqui
-                },
+                onPressed: () {},
                 style: ElevatedButton.styleFrom(
-                  primary: const Color(0xFFB10C43),
+                  backgroundColor: const Color(0xFFB10C43),
                   shape: const CircleBorder(),
                 ),
                 child: const Icon(
